@@ -7,7 +7,7 @@
 #############################################################################
 #### Pre-load functions and data
 library("zoo")
-setwd("~/Documents/Hi-reComb_analyses/")
+setwd("YOUR_FOLDER/Hi-reComb_analyses/")
 source("Hi-reComb_functions.R")
 colsSpecies <- palette.colors(palette = "R4")[-c(1,3,5)]
 genomes <- loadGenomes(); names(genomes) <- c("fAstCal","fNeoMul","GasAcu")
@@ -24,9 +24,9 @@ names(LDmapStickleback) <- c("chr","start","end", "WB_a")
 #### 1) Analyses of Hi-reComb Simulate
 #############################################################################
 # 1.1) Error rate estimation (Figure 2D)
-loadSimulationErrorRates();
+ser <- loadSimulationErrorRates(); names(ser) <- c("fpEstimates05pc","fpEstimates1pc","fpEstimates2pc","fpEstimates5pc")
 pdf("output_plots/simulations_error_rate.pdf",4,9)
-boxplot(fpEstimates05pc, fpEstimates1pc, fpEstimates2pc, fpEstimates5pc,ylim=c(0,0.06),names=c("0.5%","1%","2%","5%"),xlab="Simulated error rates",ylab="Inferred error rates")
+boxplot(ser$fpEstimates05pc, ser$fpEstimates1pc, ser$fpEstimates2pc, ser$fpEstimates5pc,ylim=c(0,0.06),names=c("0.5%","1%","2%","5%"),xlab="Simulated error rates",ylab="Inferred error rates")
 dev.off()
 
 # 1.2) AulStu chr2 reference; 1pc error, varying effective coverage
@@ -41,7 +41,6 @@ plotTenReconstructions(mapAulStuR_2000x,"1pc 2000x")
 pdf("output_plots/simulations_1pc_3000x_reconstruction.pdf",9,5)
 plotTenReconstructions(mapAulStuR_3000x,"1pc 3000x") ### And this is Figure 2A
 dev.off()
-plotTenReconstructions(mapAulStuR_3000x_m25,"1pc 3000x")
 cor_500x_Aul <- getCorrelationsWithRefMapAtDifferentScales(mapAulStuR_500x)
 cor_1000x_Aul <- getCorrelationsWithRefMapAtDifferentScales(mapAulStuR_1000x)
 cor_2000x_Aul <- getCorrelationsWithRefMapAtDifferentScales(mapAulStuR_2000x)
@@ -78,10 +77,10 @@ abline(h=mean(mapAulStuR_3000x[,3]),col="red")
 #############################################################################
 
 # Map for Supplementary Figure 4:
-mapAulStu2 <- read.table("maps/reconstructed/recombMap241209_H5a2_chr2_FW_2000.txt",row.names=NULL,header=FALSE)
+mapAulStu2 <- read.table("maps/reconstructed/H5a2_chr2.txt",row.names=NULL,header=FALSE)
 pdf("output_plots/recombMap241209_H5a2_chr2_FW_2000.pdf",width=10,height=6)
 plot(mapAulStu2[,1], mapAulStu2[,3],type='l',xlab="chr 2 (LS420020) coordinates",ylab="r (per bp)", main="A. stuartgranti - original", ylim=c(0,3e-7))
-points(fAstCal14ChrSizes[2,2],0,pch=16)
+points(genomes$fAstCal[2,2],0,pch=16)
 dev.off()
 
 # Figure 3A - empirical error rates
@@ -119,7 +118,7 @@ dev.off()
 
 # Supplementary Figure 1 - effective depth along the chromosome
 depthNeoMul16 <- read.table("maps/reconstructed/wDepth/recombMap_wDepth_T2-2_chr16.txt",header=T)
-pdf("output_plots/recombMap_wDepth_T2-2_chr15.pdf",width=10,height=6)
+pdf("output_plots/recombMap_wDepth_T2-2_chr16.pdf",width=10,height=6)
 plot(depthNeoMul16$pos, depthNeoMul16$EffectiveDepth,type='l',ylab="Effective coverage",xlab="Coordinates")
 abline(h=0.2*mean(depthNeoMul16$EffectiveDepth))
 dev.off()
@@ -173,7 +172,7 @@ boxplot(empiricalErrorRates[5:6],las=2,ylab="Estimated error rate (per chromosom
 dev.off() 
 
 # ---------- Figure 5B correlations with LD-based maps ------------
-LDmapSticklebackList <- get_GasAcu_WB_LDmap(LDmapsStickleback); LDmapSticklebackList <- LDmapSticklebackList[-19] # Exclude the X chromosome
+LDmapSticklebackList <- get_GasAcu_WB_LDmap(LDmapStickleback); LDmapSticklebackList <- LDmapSticklebackList[-19] # Exclude the X chromosome
 corGasAcu_LD <- getCorrelationsOfTwoMapsAtDifferentScales(mapGasAcu, LDmapSticklebackList)
 corGasAcuTrio_LD <- getCorrelationsOfTwoMapsAtDifferentScales(mapGasAcuTrio, LDmapSticklebackList)
 pdf("output_plots/SticklebackCorrelations.pdf",height=9,width=9)

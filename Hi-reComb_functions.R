@@ -21,6 +21,7 @@ loadSimulationErrorRates <- function() {
 	fpEstimates1pc <- c(0.0100932, 0.0100579, 0.00815174, 0.012543, 0.00638092, 0.0101994, 0.00949528, 0.0092311, 0.0107887, 0.0117928)
 	fpEstimates2pc <- c(0.0215488, 0.021312, 0.0195243, 0.0187395, 0.0173437, 0.0195534, 0.0208934, 0.0215381, 0.0205156, 0.0244012)
 	fpEstimates5pc <- c(0.0550622,0.0500238, 0.0504625, 0.0594678, 0.0512728, 0.0489242, 0.0516474, 0.0502548, 0.0469761, 0.0456089)
+	return(list(fpEstimates05pc, fpEstimates1pc, fpEstimates2pc, fpEstimates5pc))
 }
 
 # Rates manually copied from Hi-reComb RecombMap output
@@ -44,7 +45,7 @@ plotTenReconstructions <- function(mapAulStuR, tit="", maxY=3e-7) {
 	#for (i in 5:13) { lines(mapAulStuR[,1], mapAulStuR[,i], col=cols[i-3],lwd=0.5) } 
 	for (i in 5:13) { lines(mapAulStuR[,1], mapAulStuR[,i], col="gray50",lwd=0.3) } 
 	lines(mapAulStuR[,1], mapAulStuR[,3], col="black",lwd=2)
-	legend("top",c("original", "reconstructed"), col=c("black", cols[1]),lwd=c(2,1),lty=1,bty="n")
+	legend("top",c("original", "reconstructed"), col=c("black", "gray50"),lwd=c(2,1),lty=1,bty="n")
 }
 
 getCorrelationsWithRefMapAtDifferentScales <- function(mapsSimRec) {
