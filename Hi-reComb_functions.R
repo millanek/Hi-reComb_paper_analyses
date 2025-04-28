@@ -1,14 +1,14 @@
 
 loadGenomes <- function() {
-	fAstCal14ChrSizes <- read.table("~/Ambizione/Hi-reCombPaper/analyses/data/fAstCal14_final.genome")[1:22,]; 
+	fAstCal14ChrSizes <- read.table("genomes/fAstCal14_final.genome")[1:22,]; 
 	fAstCal14ChrSizes <- cbind(fAstCal14ChrSizes, cumsum(fAstCal14ChrSizes[,2])); names(fAstCal14ChrSizes) <- c("chr","size","cumSize")
 
-	fNeoMul12ChrSizes <- read.table("~/Ambizione/Hi-reCombPaper/analyses/data/fNeoMul12_final.genome")[1:22,]; 
+	fNeoMul12ChrSizes <- read.table("genomes/fNeoMul12_final.genome")[1:22,]; 
 	fNeoMul12ChrSizes <- cbind(fNeoMul12ChrSizes, cumsum(fNeoMul12ChrSizes[,2])); names(fNeoMul12ChrSizes) <- c("chr","size","cumSize")
-	fNeoMul12ChrSizesAll <- read.table("~/Ambizione/Hi-reCombPaper/analyses/data/fNeoMul12_final.genome"); 
+	fNeoMul12ChrSizesAll <- read.table("genomes/fNeoMul12_final.genome"); 
 	fNeoMul12ChrSizesAll <- cbind(fNeoMul12ChrSizesAll, cumsum(fNeoMul12ChrSizesAll[,2])); names(fNeoMul12ChrSizesAll) <- c("chr","size","cumSize")
 
-	stickGenome <- read.table("~/Ambizione/Hi-reCombPaper/analyses/data/GCF_016920845.1_GAculeatus_UGA_version5_genomic.genome")[1:21,]; 
+	stickGenome <- read.table("genomes/GCF_016920845.1_GAculeatus_UGA_version5_genomic.genome")[1:21,]; 
 	stickGenome <- cbind(stickGenome, cumsum(stickGenome[,2])); names(stickGenome) <- c("chr","size","cumSize")
 	
 	genomes <- list(fAstCal14ChrSizes, fNeoMul12ChrSizes, stickGenome)
